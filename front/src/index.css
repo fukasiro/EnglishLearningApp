@@ -1,0 +1,13 @@
+:root {
+  background-color: #131f24; /* ダーク背景 */
+  color: #fff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
