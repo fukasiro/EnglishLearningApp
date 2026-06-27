@@ -28,7 +28,6 @@ jobs:
   frontend:
     name: Frontend CI
     runs-on: ubuntu-latest
-    # 👇 フロントエンドのコマンドはすべて「front」フォルダの中で実行する設定
     defaults:
       run:
         working-directory: ./front
@@ -39,6 +38,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          # 👇「frontフォルダの中にあるファイルを見てキャッシュしてね」という設定を足しました
+          cache-dependency-path: ./front/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
       - name: Build frontend
