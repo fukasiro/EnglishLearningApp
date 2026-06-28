@@ -37,3 +37,11 @@
   justify-content: center;
   flex: 1;
 }
+
+@media (max-width: 768px) {
+  .app-main-content-area-with-sidebar {
+    padding-left: 0;
+    padding-bottom: 116px;
+    width: 100%;
+  }
+}
