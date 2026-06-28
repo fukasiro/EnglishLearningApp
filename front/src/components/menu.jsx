@@ -25,8 +25,10 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
             onNavigate('landing');
             setActiveMenu('dashboard');
           }}
+          title="ダッシュボード"
         >
-          <span className="icon">🏠</span> ダッシュボード
+          <span className="icon">🏠</span>
+          <span className="sidebar-label">ダッシュボード</span>
         </button>
 
         {/* 📚 英単語学習 */}
@@ -36,8 +38,10 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
             onNavigate('chat');
             setActiveMenu('chat');
           }}
+          title="英単語学習"
         >
-          <span className="icon">📚</span> 英単語学習
+          <span className="icon">📚</span>
+          <span className="sidebar-label">英単語学習</span>
         </button>
 
         {/* 🧠 文法学習 */}
@@ -47,8 +51,10 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
             onNavigate('grammar');
             setActiveMenu('grammar');
           }}
+          title="文法学習"
         >
-          <span className="icon">🧠</span> 文法学習
+          <span className="icon">🧠</span>
+          <span className="sidebar-label">文法学習</span>
         </button>
 
         {/* 🎧 リスニング */}
@@ -58,8 +64,10 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
             onNavigate('vocab');
             setActiveMenu('vocab');
           }}
+          title="リスニング"
         >
-          <span className="icon">🎧</span> リスニング
+          <span className="icon">🎧</span>
+          <span className="sidebar-label">リスニング</span>
         </button>
 
         {/* ✍️ ライティング */}
@@ -69,20 +77,23 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
             onNavigate('analysis');
             setActiveMenu('analysis');
           }}
+          title="ライティング"
         >
-          <span className="icon">✍️</span> ライティング
+          <span className="icon">✍️</span>
+          <span className="sidebar-label">ライティング</span>
         </button>
 
         {/* 📝 総合テスト（追加項目） */}
         <button 
           className={`sidebar-item ${activeMenu === 'test' ? 'active' : ''}`}
           onClick={() => {
-            // 現状は真っ白防止のため暫定的にchatなどに飛ばすか、必要に応じてApp.jsxに分岐を作ってください
             onNavigate('chat'); 
             setActiveMenu('test');
           }}
+          title="総合テスト"
         >
-          <span className="icon">📝</span> 総合テスト
+          <span className="icon">📝</span>
+          <span className="sidebar-label">総合テスト</span>
         </button>
       </nav>
 
@@ -95,17 +106,38 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
         {!isLoggedIn ? (
           /* 未ログイン時：ログイン・新規登録ボタン */
           <div className="sidebar-auth-buttons">
-            <button 
+                <button 
               className={`nav-login-btn ${currentMode === 'login' ? 'active' : ''}`} 
               onClick={() => onNavigate('login')}
+              title="ログイン"
+              aria-label="ログイン"
             >
               ログイン
             </button>
             <button 
               className={`nav-signup-btn ${currentMode === 'signup' ? 'active' : ''}`} 
               onClick={() => onNavigate('signup')}
+              title="新規登録"
+              aria-label="新規登録"
             >
               新規登録
+            </button>
+            <button 
+              className={`nav-profile-btn mobile-only-profile-btn ${isLoggedIn ? 'logged-in' : ''}`} 
+              onClick={() => {
+                if (isLoggedIn) {
+                  onNavigate('landing');
+                } else {
+                  onNavigate('login');
+                }
+              }}
+              title={isLoggedIn ? 'プロフィール' : 'ログイン'}
+              aria-label={isLoggedIn ? 'プロフィール' : 'ログイン'}
+            >
+              <svg viewBox="0 0 24 24" className="profile-icon" aria-hidden="true">
+                <circle cx="12" cy="8" r="3.5" />
+                <path d="M5.5 18.5a6.5 6.5 0 0 1 13 0" />
+              </svg>
             </button>
           </div>
         ) : (

@@ -68,6 +68,10 @@
   font-size: 20px;
 }
 
+.sidebar-label {
+  white-space: nowrap;
+}
+
 /* 下部固定エリア */
 .sidebar-footer-area {
   display: flex;
@@ -194,4 +198,139 @@
 
 .sidebar-logout-btn:hover {
   background-color: #fef2f2;
+}
+
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-top: none;
+    box-shadow: 0 -1px 0 rgba(229, 231, 235, 0.8);
+    padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sidebar-logo {
+    display: none;
+  }
+
+  .sidebar-nav-menu {
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .sidebar-item {
+    flex: 0 0 auto;
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    padding: 0;
+    font-size: 0;
+    border-radius: 16px;
+    gap: 0;
+  }
+
+  .sidebar-item .icon {
+    font-size: 20px;
+  }
+
+  .sidebar-label {
+    display: none;
+  }
+
+  .sidebar-footer-area {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .mode-toggle-btn-sidebar {
+    display: none;
+  }
+
+  .auth-separator {
+    display: none;
+  }
+
+  .sidebar-auth-buttons {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .sidebar-auth-buttons .nav-login-btn,
+  .sidebar-auth-buttons .nav-signup-btn {
+    display: none;
+  }
+
+  .sidebar-auth-buttons button {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .mobile-only-profile-btn {
+    display: none;
+  }
+
+  .nav-profile-btn {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(17, 24, 39, 0.2);
+  }
+
+  .mobile-only-profile-btn {
+    display: flex;
+  }
+
+  .nav-profile-btn .profile-icon {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only-profile-btn {
+    display: none !important;
+  }
+
+  .nav-profile-btn.logged-in {
+    background-color: #0284c7;
+    box-shadow: 0 2px 0 #0369a1;
+  }
+
+  .sidebar-profile-box {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .profile-details {
+    display: none;
+  }
 }
