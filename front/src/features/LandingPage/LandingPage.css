@@ -1,0 +1,204 @@
+/* src/features/LandingPage/LandingPage.css */
+
+/* 1. ランディング全体のコンテナ（ヘッダーの下の領域いっぱいに広げる） */
+.landing-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-sizing: border-box;
+  background-color: #eef2f3; /* 柔らかいライトグレー */
+}
+
+/* 2. メインエリア（サイドバーとコンテンツを横並びにする） */
+.landing-main {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 3. 左側：サイドバー */
+.landing-sidebar {
+  width: 260px;
+  background-color: #ffffff;
+  border-right: 2px solid #e5e7eb;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #4b5563;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.sidebar-item:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+/* アクティブ（選択中）のスタイル */
+.sidebar-item.active {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  border-color: #bae6fd;
+}
+
+.sidebar-item .icon {
+  font-size: 20px;
+}
+
+/* 4. 右側：コンテンツ表示エリア */
+.landing-content {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* 5. 中央上：ヒーローカード */
+.hero-card {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 24px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.badge {
+  background-color: #ecfeff;
+  color: #0891b2;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 1px solid #cffafe;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #4b5563;
+  margin: 0;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.btn-start {
+  background-color: #22d3ee;
+  color: #ffffff;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #0891b2;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn-start:active {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.btn-flow {
+  background-color: #ffffff;
+  color: #9ca3af;
+  border: 2px solid #e5e7eb;
+  padding: 14px 32px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: not-allowed;
+}
+
+/* 6. 中央下：解説グリッド（2カラム） */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.info-card {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.info-card h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.info-card ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* 7. フッター */
+.landing-footer {
+  height: 60px;
+  background-color: #ffffff;
+  border-top: 2px solid #e5e7eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-badge {
+  background-color: #1f2937;
+  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+}

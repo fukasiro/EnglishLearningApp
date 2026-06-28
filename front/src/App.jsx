@@ -1,66 +1,122 @@
+// front/src/App.jsx
 import { useState } from 'react';
 import './App.css';
 import LoginForm from './features/auth/components/LoginForm';
 import SignUpForm from './features/auth/components/SignUpForm';
-import VerifyCodeForm from './features/auth/components/VerifyCodeForm';
-import Button from './components/Button';
+import LandingPage from './features/LandingPage/LandingPage.jsx'; 
+import Menu from './components/menu.jsx'; 
 
 function App() {
-  const [mode, setMode] = useState('login');
-  const [signupEmail, setSignupEmail] = useState('');
-  const [pendingName, setPendingName] = useState('');
-  const isLoginMode = mode === 'login';
-  const isVerifyMode = mode === 'verify';
+  const [mode, setMode] = useState('landing'); 
+  const [activeMenu, setActiveMenu] = useState('dashboard');
+  
+  // 💡 本当のログイン状態を管理するState
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // サイドバーを表示する画面の条件
+  const showSidebar = mode === 'landing' || mode === 'chat' || mode === 'grammar' || mode === 'vocab' || mode === 'analysis';
+
+  // 💡 メニューのナビゲーション処理を最適化
+  const handleMenuNavigate = (target) => {
+    if (target === 'dashboard' || target === 'landing') {
+      setMode('landing');
+      setActiveMenu('dashboard');
+    } else {
+      setMode(target);
+      setActiveMenu(target);
+    }
+  };
 
   return (
     <div className="app-viewport">
-      <div className="top-navigation">
-        <button className="close-btn">×</button>
-        <Button
-          variant="secondary"
-          type="button"
-          onClick={() => setMode(isVerifyMode ? 'login' : isLoginMode ? 'signup' : 'login')}
-        >
-          {isVerifyMode ? 'ログイン' : isLoginMode ? '登録' : 'ログイン'}
-        </Button>
-      </div>
+      {/* 左側固定のサイドバーメニュー */}
+      {showSidebar && (
+        <Menu 
+          currentMode={mode}
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+          onNavigate={handleMenuNavigate}
+          isLoggedIn={isLoggedIn} // 💡 ログイン状態をPropsとして渡す
+          onLogout={() => {
+            setIsLoggedIn(false); // ログアウト処理
+            setMode('landing');
+            setActiveMenu('dashboard');
+          }}
+        />
+      )}
 
-      <main className="main-content">
-        <h1 className="page-title">
-          {isLoginMode && 'ログイン'}
-          {mode === 'signup' && 'アカウントを作ろう！'}
-          {isVerifyMode && '認証コードを入力'}
-        </h1>
-
-        {isLoginMode && <LoginForm />}
-        {mode === 'signup' && (
-          <SignUpForm
-            onSignupSuccess={(email, name) => {
-              setSignupEmail(email);
-              setPendingName(name || '');
-              setMode('verify');
+      {/* サイドバーの有無によってレイアウトクラスを切り替え */}
+      <div className={showSidebar ? "app-main-content-area-with-sidebar" : "app-main-content-area-full"}>
+        
+        {/* 1. ランディングページ（ダッシュボード） */}
+        {mode === 'landing' && (
+          <LandingPage 
+            onNavigateToLogin={() => setMode('login')} 
+            onNavigateToSignUp={() => setMode('signup')}
+            onStartLearning={() => {
+              setIsLoggedIn(true); // 体験開始時もログイン状態にする場合はここをtrueに
+              setMode('chat');
+              setActiveMenu('chat');
             }}
           />
         )}
-        {isVerifyMode && (
-          <VerifyCodeForm
-            email={signupEmail}
-            name={pendingName}
-            onVerifySuccess={() => setMode('login')}
+
+        {/* 2. ログイン画面 */}
+        {mode === 'login' && (
+          <LoginForm 
+            onNavigateToLanding={() => {
+              setMode('landing');
+              setActiveMenu('dashboard');
+            }}
+            onNavigateToSignUp={() => setMode('signup')}
+            onNavigateToChat={() => {
+              setIsLoggedIn(true); // 💡 「ログインせずに始める」やログイン成功時にtrueにする
+              setMode('chat');
+              setActiveMenu('chat');
+            }}
           />
         )}
 
-        <div className="divider">
-          <span>または</span>
-        </div>
+        {/* 3. 新規登録画面 */}
+        {mode === 'signup' && (
+          <SignUpForm 
+            onNavigateToLanding={() => {
+              setMode('landing');
+              setActiveMenu('dashboard');
+            }}
+            onNavigateToLogin={() => setMode('login')}
+          />
+        )}
 
-        <p className="legal-text">
-          ログインするとDuolingoの <span>利用規約</span> と <span>プライバシーポリシー</span> に同意したことになります。
-        </p>
-        <p className="recaptcha-text">
-          このサイトはreCAPTCHA Enterpriseにより保護されており、Googleの <span>プライバシー ポリシー</span> と <span>利用規約</span> が適用されます。
-        </p>
-      </main>
+        {/* 4. AI会話コーチ */}
+        {mode === 'chat' && (
+          <div className="chat-placeholder-container">
+            <h2>🤖 AI会話コーチ画面（開発中）</h2>
+          </div>
+        )}
+
+        {/* 5. 文法・表現添削 */}
+        {mode === 'grammar' && (
+          <div className="chat-placeholder-container">
+            <h2>📝 文法・表現添削画面（開発中）</h2>
+          </div>
+        )}
+
+        {/* 6. 単語・熟語サプリ */}
+        {mode === 'vocab' && (
+          <div className="chat-placeholder-container">
+            <h2>📚 単語・熟語サプリ画面（開発中）</h2>
+          </div>
+        )}
+
+        {/* 7. 新形式模試・分析 */}
+        {mode === 'analysis' && (
+          <div className="chat-placeholder-container">
+            <h2>📈 新形式模試・分析画面（開発中）</h2>
+          </div>
+        )}
+
+      </div>
     </div>
   );
 }

@@ -1,147 +1,39 @@
-/* 全体レイアウト */
+/* front/src/App.css */
+
 .app-viewport {
-  width: 100vw;
-  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 20px;
-}
-
-/* 上部ボタンエリア */
-.top-navigation {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  right: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  color: #4b5563;
-  font-size: 32px;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-}
-
-/* メインコンテンツ（幅と中央寄せの再現） */
-.main-content {
+  min-height: 100vh;
   width: 100%;
-  max-width: 375px; /* Duolingoのフォーム幅 */
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
-
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 24px;
-  letter-spacing: 0.5px;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* 入力欄のスタイル */
-.common-input {
-  width: 100%;
-  padding: 14px 16px;
-  background-color: #202f36;
-  border: 2px solid #374151;
-  border-radius: 12px;
-  color: #fff;
-  font-size: 15px;
-  box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.common-input:focus {
-  border-color: #3b82f6;
-}
-
-/* ボタンの共通立体デザイン */
-.duo-btn {
-  width: 100%;
-  padding: 14px;
-  font-size: 15px;
-  font-weight: 700;
-  border-radius: 12px;
-  cursor: pointer;
-  box-sizing: border-box;
-  transition: filter 0.2s;
-}
-
-.btn-primary {
-  background-color: #49c0f8;
-  color: #131f24;
-  border: none;
-  box-shadow: 0 4px 0 #1899d6;
-}
-
-.btn-primary:active {
-  transform: translateY(4px);
-  box-shadow: none;
-}
-
-.btn-secondary {
-  background: none;
-  border: 2px solid #374151;
-  color: #49c0f8;
-  width: auto; /* 右上用 */
-  padding: 6px 16px;
-}
-
-/* 「または」の区切り線 */
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 28px 0;
-  color: #4b5563;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  border-bottom: 2px solid #202f36;
-}
-
-.divider span {
-  padding: 0 12px;
-}
-
-/* フッターの注記テキスト */
-.legal-text, .recaptcha-text {
-  font-size: 12px;
-  color: #4b5563;
-  line-height: 1.6;
+  background-color: #eef2f3; 
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.legal-text {
-  margin-bottom: 16px;
+/* サイドバーがあるときのメイン領域 */
+.app-main-content-area-with-sidebar {
+  flex: 1;
+  padding-left: 260px; 
+  width: calc(100% - 260px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.legal-text span, .recaptcha-text span {
-  text-decoration: underline;
-  cursor: pointer;
+/* サイドバーがないときのメイン領域（ログイン・新規登録用） */
+.app-main-content-area-full {
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.status-message {
-  margin-top: 12px;
-  color: #10b981;
-  font-size: 14px;
+/* チャット用暫定 */
+.chat-placeholder-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }

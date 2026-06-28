@@ -1,9 +1,11 @@
+// front/src/features/auth/components/LoginForm.jsx
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import './LoginForm.css'; 
 
-export default function LoginForm() {
+export default function LoginForm({ onNavigateToLanding, onNavigateToSignUp, onNavigateToChat }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { loginWithEmail, loading, message } = useAuth();
@@ -15,26 +17,64 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-form">
-      <Input
-        type="email"
-        placeholder="Eメールまたはユーザー名"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <Input
-        type="password"
-        placeholder="パスワード"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <Button type="submit" variant="primary">
-        {loading ? '処理中...' : 'ログイン'}
-      </Button>
+    <div className="auth-page-container">
+      <main className="main-content-card">
+        
+        {/* ホームに戻るボタン */}
+        <button className="back-to-home-btn" onClick={onNavigateToLanding}>
+          ← ホームに戻る
+        </button>
 
-      {message && <p className="status-message">{message}</p>}
-    </form>
+        <h1 className="page-title">ログイン</h1>
+
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-input-group">
+            <Input
+              type="email"
+              placeholder="Eメールまたはユーザー名"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          
+          <div className="form-input-group">
+            <Input
+              type="password"
+              placeholder="パスワード"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-button-group">
+            <Button type="submit" variant="primary">
+              {loading ? '処理中...' : 'ログイン'}
+            </Button>
+          </div>
+
+          <p className="signup-redirect-text">
+            アカウントをお持ちでないですか？{' '}
+            <span className="signup-link" onClick={onNavigateToSignUp}>
+              登録する
+            </span>
+          </p>
+
+          {message && <p className="status-message">{message}</p>}
+        </form>
+
+        <button type="button" className="skip-btn" onClick={onNavigateToChat}>
+          ログインせずに始める 🚀
+        </button>
+        
+        <div className="auth-divider"><span>または</span></div>
+        
+        <p className="legal-text">
+          ログインすると利用規約とプライバシーポリシーに同意したことになります。
+        </p>
+
+      </main>
+    </div>
   );
 }
