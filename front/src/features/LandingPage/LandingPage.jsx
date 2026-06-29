@@ -1,8 +1,7 @@
-// front/src/features/LandingPage/LandingPage.jsx
 import React from 'react';
 import './LandingPage.css';
 import DashBoard from './components/DashBoard';
-import Reading from './components/Reading'; // 💡 リーディングをインポート
+import Reading from './components/Reading'; 
 import LoginForm from '../auth/components/LoginForm';
 import SignUpForm from '../auth/components/SignUpForm';
 
@@ -35,7 +34,7 @@ export default function LandingPage({
           />
         )}
 
-        {/* 3. 新規登録画面 */}
+        {/* 3. 新規登録画面（onAuthSuccess として handleAuthSuccess を渡す） */}
         {mode === 'signup' && (
           <SignUpForm 
             onNavigateToLanding={() => {
@@ -43,10 +42,11 @@ export default function LandingPage({
               setActiveMenu('dashboard');
             }}
             onNavigateToLogin={() => setMode('login')}
+            onAuthSuccess={handleAuthSuccess} 
           />
         )}
 
-        {/* 4. 📚 リーディング（単語帳・読解・文法カード内包） */}
+        {/* 4. 📚 リーディング */}
         {mode === 'chat' && (
           <Reading />
         )}

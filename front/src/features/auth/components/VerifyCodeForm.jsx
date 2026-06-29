@@ -1,4 +1,3 @@
-// front/src/features/auth/components/VerifyCodeForm.jsx
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import Input from '../../../components/Input';
@@ -15,18 +14,14 @@ export default function VerifyCodeForm({ email, name, onVerifySuccess }) {
     
     const result = await verifyEmailCode({ email, code });
     
-    // 💡 修正ポイント：resultがある、またはメッセージに「作成しました」「成功」などのキーワードが含まれたら成功とみなす
     const isSuccess = result || (message && (message.includes('作成しました') || message.includes('成功')));
     
     if (isSuccess && onVerifySuccess) {
-      // 1. サーバーからトークンが返ってきている場合はそれを使い、無ければ自動ログイン用のダミーを割り当てる
       const token = (result && typeof result === 'object' ? (result.token || result.data?.token) : null) 
                     || 'auto_login_token_after_verify';
       
-      // 2. 登録時に入力したユーザー名（name）を引き継ぐ
       const userName = name || (result && typeof result === 'object' ? result.user?.name : null) || email.split('@')[0];
       
-      // 💡 親（SignUpForm -> App.jsx）の handleAuthSuccess を一撃で発火させる
       onVerifySuccess(token, userName);
     }
   };
@@ -60,7 +55,6 @@ export default function VerifyCodeForm({ email, name, onVerifySuccess }) {
         </Button>
       </div>
 
-      {/* 画面遷移が走るため、成功時はメッセージを隠し、エラーのみを表示 */}
       {message && !message.includes('作成しました') && !message.includes('成功') && (
         <p className="verify-message">{message}</p>
       )}
