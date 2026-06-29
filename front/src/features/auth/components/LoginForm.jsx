@@ -5,7 +5,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import './LoginForm.css'; 
 
-export default function LoginForm({ onNavigateToLanding, onNavigateToSignUp, onNavigateToChat }) {
+export default function LoginForm({ onNavigateToLanding, onNavigateToSignUp, onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { loginWithEmail, loading, message } = useAuth();
@@ -13,9 +13,13 @@ export default function LoginForm({ onNavigateToLanding, onNavigateToSignUp, onN
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) return;
+    
     const result = await loginWithEmail(email, password);
-    if (result && onNavigateToChat) {
-      onNavigateToChat();
+    
+    if (result && onLoginSuccess) {
+      const token = result.token || 'dummy_token';
+      const name = result.user?.name || email.split('@')[0];
+      onLoginSuccess(token, name);
     }
   };
 
@@ -67,7 +71,11 @@ export default function LoginForm({ onNavigateToLanding, onNavigateToSignUp, onN
           {message && <p className="status-message">{message}</p>}
         </form>
 
-        <button type="button" className="skip-btn" onClick={onNavigateToChat}>
+        <button 
+          type="button" 
+          className="skip-btn" 
+          onClick={() => onLoginSuccess && onLoginSuccess(null, 'ゲストユーザー')}
+        >
           ログインせずに始める 🚀
         </button>
         

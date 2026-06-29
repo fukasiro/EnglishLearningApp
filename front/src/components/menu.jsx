@@ -13,7 +13,6 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
 
       {/* 2. 中央：学習用メインメニュー */}
       <nav className="sidebar-nav-menu">
-        
         {/* 🏠 ダッシュボード */}
         <button 
           className={`sidebar-item ${activeMenu === 'dashboard' ? 'active' : ''}`}
@@ -87,29 +86,20 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
         <div className="auth-separator"></div>
 
         {!isLoggedIn ? (
-          /* 未ログイン時：PCでは通常ボタン、スマホでは右端にアイコンのみ表示 */
+          /* 未ログイン時 */
           <div className="sidebar-auth-buttons">
-            <button 
-              className={`nav-login-btn pc-only-btn ${currentMode === 'login' ? 'active' : ''}`} 
-              onClick={() => onNavigate('login')}
-              title="ログイン"
-            >
+            <button className={`nav-login-btn pc-only-btn ${currentMode === 'login' ? 'active' : ''}`} onClick={() => onNavigate('login')} title="ログイン">
               ログイン
             </button>
-            <button 
-              className={`nav-signup-btn pc-only-btn ${currentMode === 'signup' ? 'active' : ''}`} 
-              onClick={() => onNavigate('signup')}
-              title="新規登録"
-            >
+            <button className={`nav-signup-btn pc-only-btn ${currentMode === 'signup' ? 'active' : ''}`} onClick={() => onNavigate('signup')} title="新規登録">
               新規登録
             </button>
 
-            {/* 💡 スマホ時のみ右端に出現するログイン遷移用アイコンボタン */}
+            {/* スマホ用：未ログイン時のアイコン（常にグレー） */}
             <button 
-              className={`nav-profile-btn mobile-only-profile-btn ${currentMode === 'login' ? 'active' : ''}`} 
-              onClick={() => onNavigate('login')}
+              className={`mobile-avatar-btn ${currentMode === 'login' ? 'active' : ''}`} 
+              onClick={() => onNavigate('login')} 
               title="ログイン画面へ"
-              aria-label="ログイン画面へ"
             >
               <svg viewBox="0 0 24 24" className="profile-icon">
                 <circle cx="12" cy="8" r="3.5" />
@@ -118,20 +108,35 @@ export default function Menu({ currentMode, activeMenu, setActiveMenu, onNavigat
             </button>
           </div>
         ) : (
-          /* 💡 ログイン済みの時：プロフィール＆ログアウト表示 */
-          <div className="sidebar-profile-box">
-            <div className="profile-info">
-              <div className="profile-avatar">👤</div>
-              <div className="profile-details">
-                {/* 💡 App.jsx から渡された本物のユーザー名を表示（空ならゲスト） */}
-                <span className="profile-name">{userName || 'ゲストユーザー'}</span>
-                <span className="profile-status">Premium 会員</span>
+          /* ログイン済みの時 */
+          <>
+            {/* PC表示用のプロフィールボックス */}
+            <div className="sidebar-profile-box pc-profile-box">
+              <div className="profile-info">
+                <div className="profile-avatar">👤</div>
+                <div className="profile-details">
+                  <span className="profile-name">{userName || 'ゲストユーザー'}</span>
+                  <span className="profile-status">Premium 会員</span>
+                </div>
               </div>
+              <button className="sidebar-logout-btn" onClick={onLogout}>
+                ログアウト
+              </button>
             </div>
-            <button className="sidebar-logout-btn" onClick={onLogout}>
-              ログアウト
+
+            {/* スマホ用：ログイン済みのアイコン（未ログインと全く同じグレーデザインで統一） */}
+            <button 
+              className="mobile-avatar-btn" 
+              onClick={onLogout}
+              title="ログアウトする"
+              aria-label="ログアウトする"
+            >
+              <svg viewBox="0 0 24 24" className="profile-icon">
+                <circle cx="12" cy="8" r="3.5" />
+                <path d="M5.5 18.5a6.5 6.5 0 0 1 13 0" />
+              </svg>
             </button>
-          </div>
+          </>
         )}
       </div>
     </aside>

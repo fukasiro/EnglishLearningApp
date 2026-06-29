@@ -4,9 +4,10 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import { useAuth } from '../hooks/useAuth';
 import VerifyCodeForm from './VerifyCodeForm';
-import './SignUpForm.css'; // 専用のCSSを読み込む
+import './SignUpForm.css'; 
 
-export default function SignUpForm({ onNavigateToLanding, onNavigateToLogin, onAuthSuccess }) {
+// 💡 親コンポーネント（App.jsxなど）と確実に繋ぐため、Props名を onLoginSuccess に変更します
+export default function SignUpForm({ onNavigateToLanding, onNavigateToLogin, onLoginSuccess }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,12 +34,14 @@ export default function SignUpForm({ onNavigateToLanding, onNavigateToLogin, onA
             ← ホームに戻る
           </button>
           <h1 className="page-title">メール認証</h1>
+          {/* 💡 先ほど修正した VerifyCodeForm の引数（token, userName）をここで正しくキャッチ */}
           <VerifyCodeForm
             email={pendingEmail}
             name={name}
-            onVerifySuccess={(result) => {
-              if (result && onAuthSuccess) {
-                onAuthSuccess(result);
+            onVerifySuccess={(token, userName) => {
+              // 💡 キャッチした認証情報を、そのまま親の状態更新関数に流し込む！
+              if (onLoginSuccess) {
+                onLoginSuccess(token, userName);
               }
             }}
           />
@@ -63,7 +66,7 @@ export default function SignUpForm({ onNavigateToLanding, onNavigateToLogin, onA
               type="text"
               placeholder="ユーザー名"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setEmail && setName(e.target.value)}
             />
           </div>
 

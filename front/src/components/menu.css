@@ -1,5 +1,6 @@
 /* front/src/components/menu.css */
 
+/* --- 1. PCサイズ時の共通・ベーススタイル --- */
 .app-sidebar {
   width: 260px;
   height: 100vh;
@@ -8,14 +9,13 @@
   padding: 32px 18px;
   display: flex;
   flex-direction: column;
-  position: fixed; /* 左側に固定 */
+  position: fixed;
   top: 0;
   left: 0;
   box-sizing: border-box;
   z-index: 100;
 }
 
-/* ロゴのスタイル */
 .sidebar-logo {
   font-size: 26px;
   font-weight: 900;
@@ -27,7 +27,6 @@
   user-select: none;
 }
 
-/* メインメニュー領域 */
 .sidebar-nav-menu {
   display: flex;
   flex-direction: column;
@@ -35,7 +34,6 @@
   flex: 1;
 }
 
-/* メニューアイテム */
 .sidebar-item {
   display: flex;
   align-items: center;
@@ -72,7 +70,6 @@
   white-space: nowrap;
 }
 
-/* 下部固定エリア */
 .sidebar-footer-area {
   display: flex;
   flex-direction: column;
@@ -97,7 +94,6 @@
   width: 100%;
 }
 
-/* 未ログイン用のボタン群 */
 .sidebar-auth-buttons {
   display: flex;
   flex-direction: column;
@@ -143,12 +139,6 @@
   box-shadow: none;
 }
 
-/* モバイル用プロフィールボタンの共通基盤定義 */
-.mobile-only-profile-btn {
-  display: none; /* デフォルト（PC）では非表示 */
-}
-
-/* プロフィールボックス */
 .sidebar-profile-box {
   display: flex;
   flex-direction: column;
@@ -205,7 +195,13 @@
   background-color: #fef2f2;
 }
 
-/* 📱 スマートフォンサイズ（レスポンシブ） */
+/* 初期状態ではスマホ用丸ボタンを完全非表示 */
+.mobile-avatar-btn {
+  display: none !important;
+}
+
+
+/* --- 2. 📱 スマートフォンサイズ（レスポンシブ：768px以下） --- */
 @media (max-width: 768px) {
   .app-sidebar {
     position: fixed;
@@ -221,10 +217,14 @@
     padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
     flex-direction: row;
     align-items: center;
-    justify-content: space-between; /* メニューと右側ボタンを綺麗に割る */
+    justify-content: space-between;
   }
 
-  .sidebar-logo, .mode-toggle-btn-sidebar, .auth-separator {
+  .sidebar-logo, 
+  .mode-toggle-btn-sidebar, 
+  .auth-separator,
+  .pc-only-btn,
+  .pc-profile-box {
     display: none !important;
   }
 
@@ -257,32 +257,35 @@
     align-items: center;
   }
 
-  /* PC用のログイン・新規登録文字テキストボタンはスマホで非表示 */
-  .pc-only-btn {
-    display: none !important;
-  }
-
-  /* 💡 スマホ用人のアイコンボタンをアクティブ化して配置 */
-  .mobile-only-profile-btn {
+  /* ✨ スマホ用丸ボタン：ログイン・未ログインに関わらず、常に統一されたシックなグレー背景 */
+  .mobile-avatar-btn {
     display: flex !important;
     align-items: center;
     justify-content: center;
     width: 48px;
     height: 48px;
     padding: 0;
-    border-radius: 12px;
-    background: #f3f4f6;
-    color: #4b5563;
-    border: 2px solid transparent;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+    background-color: #f3f4f6; /* 常にグレー */
+    color: #4b5563;            /* 常に落ち着いたダークグレーの線 */
+    transition: all 0.2s ease;
   }
 
-  .mobile-only-profile-btn.active {
+  .mobile-avatar-btn:hover {
+    background-color: #e5e7eb;
+  }
+
+  /* ログイン画面（login）に滞在している時だけ、アクティブな青枠にする装飾（未ログイン時用） */
+  .mobile-avatar-btn.active {
     background-color: #e0f2fe;
     color: #0284c7;
-    border-color: #bae6fd;
+    border: 2px solid #bae6fd;
   }
 
-  .mobile-only-profile-btn .profile-icon {
+  .mobile-avatar-btn .profile-icon {
     width: 22px;
     height: 22px;
     fill: none;
@@ -290,17 +293,5 @@
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
-  }
-
-  /* ログイン済みの時のプロフィールボックスもスマホ横並び対応 */
-  .sidebar-profile-box {
-    flex-direction: row;
-    align-items: center;
-    padding: 4px 8px;
-    gap: 8px;
-    border-radius: 12px;
-  }
-  .profile-details {
-    display: none; /* スマホでは名前は隠してコンパクトに */
   }
 }
